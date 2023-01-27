@@ -1,0 +1,7 @@
+{
+  "name": "CrewdleJSSDKSample",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
