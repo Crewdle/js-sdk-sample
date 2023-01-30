@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CrewdleJsSdk } from 'crewdle-js-sdk';
+import { CrewdleJsSdk, CrewdleEvents } from 'crewdle-js-sdk';
 
 @Component({
   selector: 'app-home',
@@ -9,17 +9,24 @@ import { CrewdleJsSdk } from 'crewdle-js-sdk';
 export class HomePage {
 
   constructor() {
+  }
+
+  ionViewDidEnter() {
     // Get User token: POST /v1/users
-    const accessToken = 'abcd';
+    const accessToken = '{token here}';
     // Get Room: POST /v1/rooms
-    const roomId = 'abcd';
+    const roomId = '{room ID here}';
 
     const crewdle = new CrewdleJsSdk();
-    crewdle.openRoom(roomId, accessToken, ['chat'], 'container');
-    // crewdle.openRoom(roomId, userToken, 'container');
-    /* crewdle.on('room_leave', () => {
-      // do something;
-    });*/
+    crewdle.on(CrewdleEvents.ready, () => {
+      console.log('Room ready');
+    });
+    crewdle.on(CrewdleEvents.roomLeft, () => {
+      console.log('Room left');
+    });
+    crewdle.openRoom(roomId, accessToken, [], 'container')
+      .then(() => console.log('Room loaded'))
+      .catch((err) => console.error(err));
   }
 
 }
