@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CrewdleJsSdk, CrewdleEvents } from 'crewdle-js-sdk';
+import { CrewdleJsSdk, CrewdleEvents, CrewdleFeatures } from 'crewdle-js-sdk';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +24,13 @@ export class HomePage {
     crewdle.on(CrewdleEvents.roomLeft, () => {
       console.log('Room left');
     });
-    crewdle.openRoom(roomId, accessToken, [], 'container')
+    crewdle.on(CrewdleEvents.authFailed, () => {
+      console.log('Auth failed');
+    });
+    const features = [
+      CrewdleFeatures.chat,
+    ];
+    crewdle.openRoom(roomId, accessToken, features, 'container')
       .then(() => console.log('Room loaded'))
       .catch((err) => console.error(err));
   }
