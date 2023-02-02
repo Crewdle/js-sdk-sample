@@ -12,10 +12,11 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    const accessKey = '{Your access token}';
     // Get User token: POST /v1/users
-    const accessToken = '{token here}';
-    // Get Room: POST /v1/rooms
-    const roomId = '{room ID here}';
+    const accessToken = '{User access token}';
+    // Get Room: POST /v1/users/:userId/rooms
+    const roomId = '{Room ID}}';
 
     const crewdle = new CrewdleJsSdk();
     crewdle.on(CrewdleEvents.ready, () => {
@@ -30,7 +31,7 @@ export class HomePage {
     const features = [
       CrewdleFeatures.chat,
     ];
-    crewdle.openRoom(roomId, accessToken, features, 'container')
+    crewdle.openRoom(roomId, accessKey, accessToken, features, 'container')
       .then(() => console.log('Room loaded'))
       .catch((err) => console.error(err));
   }
